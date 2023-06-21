@@ -17,7 +17,7 @@ public class FrCadAluno extends javax.swing.JFrame {
         lista = new ArrayList<>();
         this.resetarCampos(false);
     }
-    private void criandoAluno() {
+    private Aluno preencheAluno() {
 		Aluno a = new Aluno();
 		a.setNome(edtNome.getText());
 		a.setSexo(edtSexo.getText().charAt(0));
@@ -27,6 +27,7 @@ public class FrCadAluno extends javax.swing.JFrame {
 		a.setMatricula(edtMatricula1.getText());
 		int ano = Integer.parseInt(edtanodeingesso.getText());
 		a.setAnoDeIngresso(ano);
+		return a;
 	}
 
     /**
@@ -57,7 +58,7 @@ public class FrCadAluno extends javax.swing.JFrame {
                 edtanodeingesso = new javax.swing.JTextField();
                 pnlResultado = new javax.swing.JPanel();
                 jScrollPane2 = new javax.swing.JScrollPane();
-                edtResultado = new javax.swing.JTextArea();
+                txtResultado = new javax.swing.JTextArea();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -204,9 +205,9 @@ public class FrCadAluno extends javax.swing.JFrame {
                                         .addComponent(edtanodeingesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 );
 
-                edtResultado.setColumns(20);
-                edtResultado.setRows(5);
-                jScrollPane2.setViewportView(edtResultado);
+                txtResultado.setColumns(20);
+                txtResultado.setRows(5);
+                jScrollPane2.setViewportView(txtResultado);
 
                 javax.swing.GroupLayout pnlResultadoLayout = new javax.swing.GroupLayout(pnlResultado);
                 pnlResultado.setLayout(pnlResultadoLayout);
@@ -275,23 +276,10 @@ public class FrCadAluno extends javax.swing.JFrame {
 	
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        //Preenchendo o objeto aluno
-        Aluno a = this.copiarCamposParaLista();
-
-        if (novoOuEditar == 0) { //Inserir o aluno na lista           
-            this.lista.add(a);
-        }else if(novoOuEditar == 1){//Atualização de um registro            
-            Aluno b = this.lista.get(indiceDeEdicao);
-            b.setNome(a.getNome());
-            b.setSexo(a.getSexo());
-            b.setIdade(a.getIdade());
-            b.setMatricula(a.getMatricula());
-        }
-
-        //mostra o resultado
-        edtResultado.setText(this.mostrarLista());
-
-        this.resetarCampos(false);
+      Aluno a;
+      a = preencheAluno();
+      txtResultado.setText(a.toString());
+      
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     public String mostrarLista() {
@@ -343,7 +331,7 @@ public class FrCadAluno extends javax.swing.JFrame {
         this.lista.remove(index);
         
         //mostra o resultado
-        edtResultado.setText(this.mostrarLista());
+        txtResultado.setText(this.mostrarLista());
 
         this.resetarCampos(false);
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -449,7 +437,6 @@ public class FrCadAluno extends javax.swing.JFrame {
         private javax.swing.JTextField edtIdade;
         private javax.swing.JTextField edtMatricula1;
         private javax.swing.JTextField edtNome;
-        private javax.swing.JTextArea edtResultado;
         private javax.swing.JTextField edtSexo;
         private javax.swing.JTextField edtanodeingesso;
         private javax.swing.JScrollPane jScrollPane2;
@@ -461,6 +448,7 @@ public class FrCadAluno extends javax.swing.JFrame {
         private javax.swing.JLabel lblanodeingresso;
         private javax.swing.JPanel pnlEdicao;
         private javax.swing.JPanel pnlResultado;
+        private javax.swing.JTextArea txtResultado;
         // End of variables declaration//GEN-END:variables
 
 }
