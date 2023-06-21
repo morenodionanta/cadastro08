@@ -17,6 +17,17 @@ public class FrCadAluno extends javax.swing.JFrame {
         lista = new ArrayList<>();
         this.resetarCampos(false);
     }
+    private void criandoAluno() {
+		Aluno a = new Aluno();
+		a.setNome(edtNome.getText());
+		a.setSexo(edtSexo.getText().charAt(0));
+		int aux;
+	    aux = Integer.parseInt(edtIdade.getText());
+		a.setIdade(aux);
+		a.setMatricula(edtMatricula1.getText());
+		int ano = Integer.parseInt(edtanodeingesso.getText());
+		a.setAnoDeIngresso(ano);
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
