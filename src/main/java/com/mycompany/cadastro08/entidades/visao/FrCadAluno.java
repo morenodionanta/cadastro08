@@ -260,16 +260,9 @@ public class FrCadAluno extends javax.swing.JFrame {
 
     
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private  void limpartexto
-    {
-	edtNome.setText("");
-	edtSexo.setText("");
-	edtIdade..setText("");
-        edtMatricula1.setText("");
-        edtanodeingesso.setText("");
+    
 	
-}   
+
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         //Preenchendo o objeto aluno
         Aluno a = this.copiarCamposParaLista();
