@@ -311,18 +311,16 @@ public class FrCadAluno extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 	    Aluno a;
 	    a = preencheAluno();
+	    this.lista.add(a);
 	    txtResultado.setText(a.toString());
+	    //mostra resulrado
+	    txtResultado.setText(a.toString());
+	    txtResultado.setText(this.mostrarLista());
+	    
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    public String mostrarLista() {
-		String listaCompleta = "";
-		for (int i = 0; i < lista.size(); i++) {
-			Aluno aux = lista.get(i);
-			listaCompleta = listaCompleta + aux.toString();
-		}
-		return listaCompleta;
-	}
+        
 
     private void edtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtNomeKeyReleased
 	    if (evt.getKeyChar() == java.awt.event.KeyEvent.VK_ENTER) {
