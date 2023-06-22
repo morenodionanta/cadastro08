@@ -12,6 +12,8 @@ public class FrCadAluno extends javax.swing.JFrame {
 
 	public FrCadAluno() {
 		initComponents();
+		lista = new ArrayList<>();
+		this.resetarCampos(false);
 		novoOuEditar = 0;
 		indiceDeEdicao = -1;
 		lista = new ArrayList<>();
@@ -32,6 +34,16 @@ public class FrCadAluno extends javax.swing.JFrame {
 		a.setMatricula(edtMatricula.getText());
 		txtResultado.setText(a.toString());
 		return null;
+	}
+
+	public String mostrarLista() {
+		String listaCompleta = "";
+
+		for (int i = 0; i <= lista.size() - 1; i++) {
+			Aluno aux = lista.get(i);
+			listaCompleta = listaCompleta + aux.toString();
+		}
+		return listaCompleta;
 	}
 
 	/**
@@ -303,7 +315,7 @@ public class FrCadAluno extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-	public String mostrarLista() {
+    public String mostrarLista() {
 		String listaCompleta = "";
 		for (int i = 0; i < lista.size(); i++) {
 			Aluno aux = lista.get(i);
@@ -366,11 +378,11 @@ public class FrCadAluno extends javax.swing.JFrame {
         }//GEN-LAST:event_edtMatriculaActionPerformed
 
         private void edtMatriculaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtMatriculaKeyReleased
-                // TODO add your handling code here:
+		// TODO add your handling code here:
         }//GEN-LAST:event_edtMatriculaKeyReleased
 
         private void edtAnodeingressoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtAnodeingressoKeyReleased
-                // TODO add your handling code here:
+		// TODO add your handling code here:
         }//GEN-LAST:event_edtAnodeingressoKeyReleased
 
 	public int pesquisarAluno(String matriculaProcurada) {
