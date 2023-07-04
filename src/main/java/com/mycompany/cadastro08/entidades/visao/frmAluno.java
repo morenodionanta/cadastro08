@@ -1,7 +1,7 @@
 package com.mycompany.cadastro08.entidades.visao;
 
-
 import com.mycompany.cadastro08.entidades.Aluno;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -23,21 +23,20 @@ public class frmAluno extends javax.swing.JFrame {
 	private ArrayList<Aluno> lista;
 	private int novoOuEditar;//=0 caso seja clicado no botão Novo ou =1 no editar
 	private int indiceDeEdicao;
-	
-	
+
 	@SuppressWarnings("OverridableMethodCallInConstructor")
 	public frmAluno() {
 		initComponents();
 		indiceDeEdicao = -1;
 		lista = new ArrayList<>();
 		this.resetarCampos(false);
-		
+
 		lista = new ArrayList<>();
 		loadArquivoAlunos();
 		hideShowCampos(false);
 		txtResultado.setText(this.mostrarLista());
 	}
-	
+
 	@SuppressWarnings("ConvertToTryWithResources")
 	private void loadArquivoAlunos() {
 		FileReader f = null;
@@ -49,27 +48,27 @@ public class frmAluno extends javax.swing.JFrame {
 		Scanner arquivo = new Scanner(f);
 		arquivo.useDelimiter("\n");//lendo a linha
 
-		String cabecalho = arquivo.next();
+		String cabecalho = arquivo.text();
 		while (arquivo.hasNext()) {
-			String linhaLida = arquivo.next();
+			String linhaLida = arquivo.text();
 			Aluno a = new Aluno();
 			a.fill(linhaLida);//usa alinha para prencher o aluno com: nome;sexo;idade;matricula;ano;
 			this.lista.add(a);
 		}
 		arquivo.close();
-		
+
 	}
-	
+
 	public String mostrarLista() {
 		String listaCompleta = "";
-		
+
 		for (int i = 0; i <= lista.size() - 1; i++) {
 			Aluno aux = lista.get(i);
 			listaCompleta = listaCompleta + aux.toString();
 		}
 		return listaCompleta;
 	}
-	
+
 	private void hideShowCampos(boolean flag) {
 		edtNome.setEnabled(flag);
 		edtSexo.setEnabled(flag);
@@ -77,7 +76,7 @@ public class frmAluno extends javax.swing.JFrame {
 		edtMatricula.setEnabled(flag);
 		edtAno.setEnabled(flag);
 	}
-	
+
 	private void limparTexto() {
 		edtNome.setText("");
 		edtSexo.setText("");
@@ -85,7 +84,7 @@ public class frmAluno extends javax.swing.JFrame {
 		edtMatricula.setText("");
 		edtAno.setText("");
 	}
-	
+
 	private Aluno preencheAluno() {
 		Aluno a = new Aluno();
 		a.setNome(edtNome.getText());
@@ -104,7 +103,7 @@ public class frmAluno extends javax.swing.JFrame {
 		a.setAnoDeIngresso(ano);
 		return a;
 	}
-	
+
 	public void copiarDaListaParaCampos(int index) {
 		Aluno a = this.lista.get(index);
 		edtNome.setText(a.getNome());
@@ -113,23 +112,24 @@ public class frmAluno extends javax.swing.JFrame {
 		edtMatricula.setText(a.getMatricula());
 		edtAno.setText(a.getAnoDeIngresso() + "");
 	}
+
 	public Aluno copiarCamposParaLista() {
-        Aluno a = new Aluno();
-        a.setNome(edtNome.getText());
-        a.setSexo(edtSexo.getText().charAt(0));
+		Aluno a = new Aluno();
+		a.setNome(edtNome.getText());
+		a.setSexo(edtSexo.getText().charAt(0));
 
-        //Testa se o campo idade foi preenchido
-        String idadeLida = edtIdade.getText();
-        if (!idadeLida.isEmpty()) {
-            int aux = Integer.parseInt(idadeLida);
-            a.setIdade(aux);
-        } else {
-            JOptionPane.showMessageDialog(this, "Campo Idade obrigatório. ");
-        }
+		//Testa se o campo idade foi preenchido
+		String idadeLida = edtIdade.getText();
+		if (!idadeLida.isEmpty()) {
+			int aux = Integer.parseInt(idadeLida);
+			a.setIdade(aux);
+		} else {
+			JOptionPane.showMessageDialog(this, "Campo Idade obrigatório. ");
+		}
 
-        a.setMatricula(edtMatricula.getText());
-        return a;
-    }
+		a.setMatricula(edtMatricula.getText());
+		return a;
+	}
 
 	/**
 	 * This method is called from within the constructor to initialize the
@@ -155,9 +155,9 @@ public class frmAluno extends javax.swing.JFrame {
                 edtSexo = new javax.swing.JTextField();
                 edtIdade = new javax.swing.JTextField();
                 edtMatricula = new javax.swing.JTextField();
-                edtAno = new javax.swing.JTextField();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 txtResultado = new javax.swing.JTextArea();
+                edtAno = new javax.swing.JFormattedTextField();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -186,6 +186,11 @@ public class frmAluno extends javax.swing.JFrame {
                 });
 
                 btnExcluir.setText("EXCLUIR");
+                btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnExcluirActionPerformed(evt);
+                        }
+                });
 
                 btnSalvar.setText("SALVAR");
                 btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -204,6 +209,11 @@ public class frmAluno extends javax.swing.JFrame {
 
                 lblAno.setText("Ano de ingresso:");
 
+                edtNome.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                edtNomeActionPerformed(evt);
+                        }
+                });
                 edtNome.addKeyListener(new java.awt.event.KeyAdapter() {
                         public void keyReleased(java.awt.event.KeyEvent evt) {
                                 edtNomeKeyReleased(evt);
@@ -231,6 +241,12 @@ public class frmAluno extends javax.swing.JFrame {
                 txtResultado.setColumns(20);
                 txtResultado.setRows(5);
                 jScrollPane1.setViewportView(txtResultado);
+
+                try {
+                        edtAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+                } catch (java.text.ParseException ex) {
+                        ex.printStackTrace();
+                }
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
@@ -273,19 +289,19 @@ public class frmAluno extends javax.swing.JFrame {
                                                                         .addComponent(lblMatricula))
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addComponent(btnSalvar))
-                                                                        .addGroup(layout.createSequentialGroup()
                                                                                 .addGap(20, 20, 20)
-                                                                                .addComponent(edtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                                .addComponent(edtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(btnSalvar))))
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(lblAno)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(edtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addContainerGap(18, Short.MAX_VALUE))
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(edtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addContainerGap(34, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1)
                                 .addGap(44, 44, 44))
                 );
                 layout.setVerticalGroup(
@@ -311,9 +327,9 @@ public class frmAluno extends javax.swing.JFrame {
                                         .addComponent(lblIdade)
                                         .addComponent(lblAno)
                                         .addComponent(edtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(edtAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(lblSexo)
-                                        .addComponent(edtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(edtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(edtAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                                 .addGap(15, 15, 15))
@@ -324,24 +340,24 @@ public class frmAluno extends javax.swing.JFrame {
         }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-	   //Preenchendo o objeto aluno
-        Aluno a = this.copiarCamposParaLista();
+	    //Preenchendo o objeto aluno
+	    Aluno a = this.copiarCamposParaLista();
 
-        if (novoOuEditar == 0) { //Inserir o aluno na lista           
-            this.lista.add(a);
-        }else if(novoOuEditar == 1){//Atualização de um registro            
-            Aluno b = this.lista.get(indiceDeEdicao);
-            b.setNome(a.getNome());
-            b.setSexo(a.getSexo());
-            b.setIdade(a.getIdade());
-            b.setMatricula(a.getMatricula());
-            b.setAnoDeIngresso(a.getAnoDeIngresso());
-        }
+	    if (novoOuEditar == 0) { //Inserir o aluno na lista           
+		    this.lista.add(a);
+	    } else if (novoOuEditar == 1) {//Atualização de um registro            
+		    Aluno b = this.lista.get(indiceDeEdicao);
+		    b.setNome(a.getNome());
+		    b.setSexo(a.getSexo());
+		    b.setIdade(a.getIdade());
+		    b.setMatricula(a.getMatricula());
+		    b.setAnoDeIngresso(a.getAnoDeIngresso());
+	    }
 
-        //mostra o resultado
-        txtResultado.setText(this.mostrarLista());
+	    //mostra o resultado
+	    txtResultado.setText(this.mostrarLista());
 
-        this.resetarCampos(false);
+	    this.resetarCampos(false);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -350,24 +366,24 @@ public class frmAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-	  //Preenchendo o objeto aluno
-        Aluno a = this.copiarCamposParaLista();
+	    //Preenchendo o objeto aluno
+	    Aluno a = this.copiarCamposParaLista();
 
-        if (novoOuEditar == 0) { //Inserir o aluno na lista           
-            this.lista.add(a);
-        }else if(novoOuEditar == 1){//Atualização de um registro            
-            Aluno b = this.lista.get(indiceDeEdicao);
-            b.setNome(a.getNome());
-            b.setSexo(a.getSexo());
-            b.setIdade(a.getIdade());
-            b.setMatricula(a.getMatricula());
-            b.setAnoDeIngresso(a.getAnoDeIngresso());
-        }
+	    if (novoOuEditar == 0) { //Inserir o aluno na lista           
+		    this.lista.add(a);
+	    } else if (novoOuEditar == 1) {//Atualização de um registro            
+		    Aluno b = this.lista.get(indiceDeEdicao);
+		    b.setNome(a.getNome());
+		    b.setSexo(a.getSexo());
+		    b.setIdade(a.getIdade());
+		    b.setMatricula(a.getMatricula());
+		    b.setAnoDeIngresso(a.getAnoDeIngresso());
+	    }
 
-        //mostra o resultado
-        txtResultado.setText(this.mostrarLista());
+	    //mostra o resultado
+	    txtResultado.setText(this.mostrarLista());
 
-        this.resetarCampos(false);
+	    this.resetarCampos(false);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void edtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtNomeKeyReleased
@@ -395,20 +411,37 @@ public class frmAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_edtMatriculaKeyReleased
 
         private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-		
+
 		this.novoOuEditar = 1;
 
 //Pegar o valor informado
-        String matriculaInformada = JOptionPane.showInputDialog("Informe o aluno a ser editado", "<informe a matrícula>");
+		String matriculaInformada = JOptionPane.showInputDialog("Informe o aluno a ser editado", "<informe a matrícula>");
 
-        //Pesquisar o aluno
-        indiceDeEdicao = this.pesquisarAluno(matriculaInformada);
+		//Pesquisar o aluno
+		indiceDeEdicao = this.pesquisarAluno(matriculaInformada);
 
-        //Fazer a edição do aluno
-        this.copiarDaListaParaCampos(indiceDeEdicao);
-        this.hideShowCampos(true);
+		//Fazer a edição do aluno
+		this.copiarDaListaParaCampos(indiceDeEdicao);
+		this.hideShowCampos(true);
 
         }//GEN-LAST:event_btnEditarActionPerformed
+
+        private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+		String matriculaInformada = JOptionPane.showInputDialog("Informe o aluno a ser excluido", "<informe a matrícula>");
+
+		int index = this.pesquisarAluno(matriculaInformada);
+
+		this.lista.remove(index);
+
+		//mostra o resultado
+		txtResultado.setText(this.mostrarLista());
+
+		this.resetarCampos(false);
+        }//GEN-LAST:event_btnExcluirActionPerformed
+
+        private void edtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNomeActionPerformed
+                // TODO add your handling code here:
+        }//GEN-LAST:event_edtNomeActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -452,7 +485,7 @@ public class frmAluno extends javax.swing.JFrame {
         private javax.swing.JButton btnExcluir;
         private javax.swing.JButton btnNovo;
         private javax.swing.JButton btnSalvar;
-        private javax.swing.JTextField edtAno;
+        private javax.swing.JFormattedTextField edtAno;
         private javax.swing.JTextField edtIdade;
         private javax.swing.JTextField edtMatricula;
         private javax.swing.JTextField edtNome;
@@ -470,7 +503,7 @@ public class frmAluno extends javax.swing.JFrame {
 	private int pesquisarAluno(String matriculaInformada) {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
-	
+
 	private void resetarCampos(boolean b) {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
